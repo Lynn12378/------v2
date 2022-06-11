@@ -2,9 +2,7 @@ import java.util.*;
 import java.text.*;
 public class Record
 {
-    private Record_Data record_Data=new Record_Data();
     private ArrayList<String> record=new ArrayList<>();
-    private ArrayList<Book> books=new ArrayList<>();
     public Record(String account,String ISBN,String borrowDate,String returnDate)
     {
         setAccount(account);
