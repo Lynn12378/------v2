@@ -8,6 +8,7 @@ public class User_Interface implements ActionListener
 	JFrame frame;
 	JPanel panel,panel2,panel3;
 	JComboBox<String> comboBox;
+	JScrollPane jsp;
 	JLabel accLB=new JLabel("±b¸¹");
 	JLabel passLB=new JLabel("±K½X");
 	JLabel nameLB=new JLabel("©m¦W");

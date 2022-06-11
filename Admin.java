@@ -66,8 +66,6 @@ public class Admin extends Member
 	}
 	public void setQuantity(){quantity=12;}
 	public void setDay(){day=21;}
-    public void setRate(){rate=1;}
     public int getQuantity(){return quantity;}
     public int getDay(){return day;}
-    public int getRate(){return rate;}
 }

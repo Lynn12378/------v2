@@ -14,16 +14,19 @@ public class Time
     }
    public int calculateDay(String BD,String RD)
    {
-        LocalDate startDate = LocalDate.of(2021, 3, 1);
-        LocalDate endDate = LocalDate.of(2021, 7, 8);
-        long days = ChronoUnit.DAYS.between(startDate, endDate);
-        int intdays=0;
+    int days=0;
         try{
-            intdays=(int)(days);
+            SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+            Date bDate=ft.parse(BD);
+            Date rDate=ft.parse(RD);
+            
+            days = (int) ((rDate.getTime() - bDate.getTime()) / (1000*3600*24));
+            
+            
         }catch(Exception e){
             e.printStackTrace();
         }
-        return intdays;
+        return days;
     }
     public String dueDate(String BD,int day)
     {
