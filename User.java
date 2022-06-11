@@ -43,7 +43,8 @@ public class User
 	}
 	public boolean find_Account()
 	{
-		accIndex=find_Account(getAccount());
+		accIndex=-1;
+		for(int i=0;i<user_Data.readUsers().size();i++){if(user_Data.readUsers().get(i).getAccount().equals(getAccount())){accIndex=i;}}
 		return accIndex==-1?false:true;
 	}
 	public void sign_up(){JOptionPane.showMessageDialog(null,"µù¥U§¹¦¨~");user_Data.addUser(this);}
