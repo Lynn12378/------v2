@@ -16,7 +16,5 @@ public class Test
         System.out.println(time.calculateDay("2022-05-10","2022-06-12"));
         user.returnBook(book);*/
         System.out.println(time.dueDate("2022-05-20",admin.getDay()));
-        
-        
     }
 }
