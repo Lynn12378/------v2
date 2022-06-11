@@ -7,6 +7,7 @@ public class Admin_UI  extends Member_UI
     public Admin_UI (User user)
     {
         super(user);
+        setID(user);
     }
     public void actionPerformed(ActionEvent e)
 	{
@@ -46,7 +47,7 @@ public class Admin_UI  extends Member_UI
 		JButton return_Book=new JButton("還書");
 		JButton inform=new JButton("個人資訊");
 		JButton history=new JButton("歷史紀錄");
-        JButton manage=new JButton("書籍管理");
+        JButton manage=new JButton("管理書籍");
 		JButton payfine=new JButton("繳納罰金");
 
 		sear_Book.setActionCommand("1");
@@ -134,7 +135,7 @@ public class Admin_UI  extends Member_UI
 		panel.add(ISBNLB);
         panel.add(ISBNTF);
 
-        confirm=new JButton("確認");
+        confirm=new JButton("確定");
 		confirm.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -162,7 +163,7 @@ public class Admin_UI  extends Member_UI
 		panel.add(ISBNLB);
         panel.add(ISBNTF);
 
-        confirm=new JButton("確認");
+        confirm=new JButton("確定");
 		confirm.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -191,7 +192,7 @@ public class Admin_UI  extends Member_UI
         JLabel publisherLB2=new JLabel(book.getPublisher());
 
 
-        confirm=new JButton("確認");
+        confirm=new JButton("確定");
 		confirm.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -232,7 +233,7 @@ public class Admin_UI  extends Member_UI
 		panel.add(ISBNLB);
         panel.add(ISBNTF);
 
-        confirm=new JButton("確認");
+        confirm=new JButton("確定");
 		confirm.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -260,7 +261,7 @@ public class Admin_UI  extends Member_UI
         authorTF=new JTextField(book.getAuthor());
         publisherTF=new JTextField(book.getPublisher());
 
-        confirm=new JButton("確認");
+        confirm=new JButton("確定");
 		confirm.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
@@ -277,7 +278,7 @@ public class Admin_UI  extends Member_UI
             }
             public boolean check_length()
             {
-                if(ISBNTF.getText().length()!=8){JOptionPane.showMessageDialog(null, "ISBN長度需等於8!","警告",2);return false;}
+                if(ISBNTF.getText().length()!=8){JOptionPane.showMessageDialog(null, "ISBN長度需等於8!","警告",0);return false;}
                 else{return true;}
             }
         });
@@ -301,7 +302,7 @@ public class Admin_UI  extends Member_UI
 		panel=new JPanel();
 
         accTF=new JTextField(16);
-        JLabel fineLB=new JLabel("金額");
+        JLabel fineLB=new JLabel("罰金:");
         JTextField fineTF=new JTextField(16);
 
 		panel.add(accLB);
@@ -310,12 +311,12 @@ public class Admin_UI  extends Member_UI
         panel.add(fineTF);
 
 
-        confirm=new JButton("確認");
+        confirm=new JButton("確定");
 		confirm.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
-                if(accTF.getText().isBlank()||fineTF.getText().isBlank()){JOptionPane.showMessageDialog(null, "輸入值不能為空!","警告",2);payFines();}
+                if(accTF.getText().isBlank()||fineTF.getText().isBlank()){JOptionPane.showMessageDialog(null, "尚無罰金");payFines();}
                 else if(admin.payFines(accTF.getText(),Integer.parseInt(fineTF.getText()))){frame.remove(panel);Home();}
                 else{payFines();}
             }
@@ -333,6 +334,7 @@ public class Admin_UI  extends Member_UI
     public void setID(User user)
     {
         admin=new Admin(user.getAccount(), user.getPassword(), user.getName(),user.getIdentity(),Integer.toString(user.getFines()));
-        this.user=new Admin(user.getAccount(), user.getPassword(), user.getName(),user.getIdentity(),Integer.toString(user.getFines()));
+        this.user=admin;
     }
+    public int getDay(){return admin.getDay();}
 }

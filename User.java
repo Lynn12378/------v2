@@ -104,6 +104,7 @@ public class User
 	{
 		time=new Time();
 		int fines=calculate_fine(book.getBorrowDate(),time.Day());
+		System.out.println(book.getBorrowDate());
 		reviseFines(getFines()+fines);
 		users=user_Data.readUsers();
 		users.set(accIndex,this);
@@ -120,7 +121,7 @@ public class User
 	public int calculate_fine(String BD,String RD)
 	{
 		time=new Time();
-		return (time.calculateDay(BD,RD)-getQuantity()>0)?(time.calculateDay(BD,RD)*rate):0;
+		return (time.calculateDay(BD,RD)-getQuantity()>0)?time.calculateDay(BD,RD):0;
 	}
 
 	public ArrayList<Book> booklist(){return book_Data.readBooks();}

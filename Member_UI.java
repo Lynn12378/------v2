@@ -217,7 +217,7 @@ public abstract class Member_UI  extends User_Interface
         JLabel titleLB2=new JLabel(book.getTitle());
         JLabel authorLB2=new JLabel(book.getAuthor());
         JLabel publisherLB2=new JLabel(book.getPublisher());
-        //JLabel dueLB2=new JLabel(user.get_Due(book.getBorrowDate()),user.getDay());
+        JLabel dueLB2=new JLabel(user.get_Due(book.getBorrowDate()),getDay());
         
         if(book.getState().equals(user.getAccount()))
         {
@@ -380,4 +380,5 @@ public abstract class Member_UI  extends User_Interface
         return pane;
     }
     public abstract void setID(User user);
+    public abstract int getDay();
 }
