@@ -58,7 +58,7 @@ public class Admin extends Member
 				if(re<0){payer.setFines(re);}
 				else{payer.setFines(re);}
 				JOptionPane.showMessageDialog(null,"付款通過\n"+(re<0?"找零:"+(-re):"")+"目前尚未繳納罰金:"+payer.getFines());
-				users.set(accIndex,payer);
+				users.set(find_Account(account),payer);
 				user_Data.rewriteUsers(users);
 				return true;
 			}	
