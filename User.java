@@ -157,20 +157,19 @@ public class User
 	}
 	public ArrayList<Record> get_Record()
 	{
-		record_Data=new Record_Data();
         record=record_Data.readRecords();
         records=new ArrayList<>();
-    
+
         for(int i=0;i<record.size();i++)
 		{
 			if(record.get(i).getAccount().equals(getAccount()))
 			{
-               
                 records.add(record.get(i));
 			}
 		}
-		return record;
+		return records;
 	}
+
 	public String get_Due(Book book)
 	{
 		String period="";

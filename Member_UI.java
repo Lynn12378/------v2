@@ -341,7 +341,7 @@ public abstract class Member_UI  extends User_Interface
         JLabel periodLB=new JLabel("借還書期間:");
         books=new ArrayList<>();
         records=user.get_Record();
-        if(records.isEmpty()){Home();}
+        if(records==null){frame.remove(panel);Home();}
         else
         {
             for(int i=0;i<records.size();i++)
@@ -375,7 +375,7 @@ public abstract class Member_UI  extends User_Interface
         pane.add(authorLB2);
         pane.add(publisherLB2);
         pane.add(ISBNLB2);
-        panel.add(periodLB2);
+        pane.add(periodLB2);
 
         return pane;
     }
