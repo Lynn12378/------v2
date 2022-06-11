@@ -10,6 +10,7 @@ public class User
 	protected ArrayList<User> users=new ArrayList<User>();
 	protected ArrayList<Book> booklist;
 	protected ArrayList<Book> books;
+	protected ArrayList<Record> record;
 	protected ArrayList<Record> records;
 	protected int accIndex;
 	protected int ISBN_Index,record_Index;
@@ -25,7 +26,7 @@ public class User
 		setIdentity(identity);
 		setFines(fines);
 	}
-	public User(String account,String password,String name,String identity,String fines)//讀檔用
+	public User(String account,String password,String name,String identity,String fines) //讀檔用
 	{
 		setAccount(account);
 		setPassword(password);
@@ -38,13 +39,11 @@ public class User
 	{
 		int Index=-1;
 		for(int i=0;i<user_Data.readUsers().size();i++){if(user_Data.readUsers().get(i).getAccount().equals(account)){Index=i;}}
-		System.out.println(Index);
 		return Index;
 	}
 	public boolean find_Account()
 	{
-		accIndex=-1;
-		for(int i=0;i<user_Data.readUsers().size();i++){if(user_Data.readUsers().get(i).getAccount().equals(getAccount())){accIndex=i;break;}}
+		accIndex=find_Account(getAccount());
 		return accIndex==-1?false:true;
 	}
 	public void sign_up(){JOptionPane.showMessageDialog(null,"註冊完成~");user_Data.addUser(this);}
@@ -67,6 +66,7 @@ public class User
 		users.set(accIndex,user);
 		user_Data.rewriteUsers(users);
 	}
+
 	public int findISBN(String ISBN)
 	{
 		ISBN_Index=-1;
@@ -99,25 +99,30 @@ public class User
 			}
 		}
 		return booklist;
-		
 	}
 	public void returnBook(Book book)
 	{
-		find_Account();
 		time=new Time();
 		int fines=calculate_fine(book.getBorrowDate(),time.Day());
-		addRecord(new Record(getAccount(),book.getISBN(),book.getBorrowDate(),time.Day()));
 		reviseFines(getFines()+fines);
 		users=user_Data.readUsers();
 		users.set(accIndex,this);
 		user_Data.rewriteUsers(users);
+
+		record_Data.addRecord(new Record(getAccount(),book.getISBN(),book.getBorrowDate()));
+
 		book.reviseState("in_Library");
 		book.reviseBorrowDate(null);
 		books=book_Data.readBooks();
 		books.set(findISBN(book.getISBN()),book);
 		book_Data.rewriteBooks(books);
 	}
-	
+	public int calculate_fine(String BD,String RD)
+	{
+		time=new Time();
+		return (time.calculateDay(BD,RD)-getQuantity()>0)?(time.calculateDay(BD,RD)*rate):0;
+	}
+
 	public ArrayList<Book> booklist(){return book_Data.readBooks();}
 	public ArrayList<Book> mybooklist()
 	{
@@ -127,48 +132,49 @@ public class User
 		}
 		return booklist;
 	}
-	public int calculate_fine(String BD,String RD)
-	{
-		time=new Time();
-		return (time.calculateDay(BD,RD)-getQuantity()>0)?(time.calculateDay(BD,RD)*rate):0;
-	}
 	public String get_Due(String BD)
 	{
 		time=new Time();
 		return time.dueDate(BD,getDay());
 	}
 
-	public void addRecord(Record record)
+
+	public ArrayList<Book> get_Record_books(String ISBN)
 	{
-		Record_Data record_Data=new Record_Data();
-		record_Data.addRecord(record);
-	}
-	public ArrayList<Book> get_Record_book()
-	{
-		books=new ArrayList<>();
-		booklist=new ArrayList<>();
-		books=record_Data.readBooks();
-		records=new ArrayList<>();
-		for(int i=0;i<records.size();i++)
+		record_Data=new Record_Data();
+        books=record_Data.readBooks();
+        booklist=new ArrayList<>();
+    
+        for(int i=0;i<record.size();i++)
 		{
-			if(records.get(i).getAccount().equals(getAccount()))
+			if(record.get(i).getAccount().equals(getAccount()))
 			{
-				for(int j=0;j<books.size();j++)
-				{
-					if(books.get(j).getISBN().equals(records.get(i).getISBN()))
-					{
-						booklist.add(books.get(j));
-					}
-				}
+               
+                booklist.add(books.get(i));
 			}
 		}
 		return booklist;
 	}
+	public ArrayList<Record> get_Record()
+	{
+		record_Data=new Record_Data();
+        record=record_Data.readRecords();
+        records=new ArrayList<>();
+    
+        for(int i=0;i<record.size();i++)
+		{
+			if(record.get(i).getAccount().equals(getAccount()))
+			{
+               
+                records.add(record.get(i));
+			}
+		}
+		return record;
+	}
 	public String get_Due(Book book)
 	{
 		String period="";
-		
-		records=new ArrayList<>();
+		records=record_Data.readRecords();
 		for(int i=0;i<records.size();i++)
 		{
 			if(records.get(i).getAccount().equals(getAccount()))

@@ -45,40 +45,7 @@ public class Record_Data
 		}
 		return null;
 	}
-	public void addBookRecord(Record record)
-	{
-		try{
-			FileWriter fw=new FileWriter(BookTXT2,true);
-			fw.write(books.toString());
-			fw.flush();
-        	fw.close();
-		}catch (FileNotFoundException e){
-			e.printStackTrace();
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-	}
-	public ArrayList<Record> readBookRecords()
-	{
-		try{
-			FileReader fr = new FileReader(BookTXT2);
-			BufferedReader br = new BufferedReader(fr);
-			records=new ArrayList<>();
-			while (br.ready())
-			{
-				input= br.readLine();
-				inputArray=input.split("\t");
-				records.add(new Record(inputArray[0],inputArray[1],inputArray[2],inputArray[3]));
-			}
-			fr.close();	
-			return records;
-		}catch (FileNotFoundException e){
-			e.printStackTrace();
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		return null;
-	}
+
 	public void addBook(Book book)
 	{
 		try

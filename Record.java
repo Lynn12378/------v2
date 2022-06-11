@@ -2,13 +2,22 @@ import java.util.*;
 import java.text.*;
 public class Record
 {
+    private Record_Data record_Data=new Record_Data();
     private ArrayList<String> record=new ArrayList<>();
+    private ArrayList<Book> books=new ArrayList<>();
     public Record(String account,String ISBN,String borrowDate,String returnDate)
     {
         setAccount(account);
         setISBN(ISBN);
         setBorrowDate(borrowDate);
         setReturnDate(returnDate);
+    }
+    public Record(String account,String ISBN,String borrowDate)
+    {
+        setAccount(account);
+        setISBN(ISBN);
+        setBorrowDate(borrowDate);
+        setReturnDate();
     }
     public String toString()
 	{
@@ -22,9 +31,10 @@ public class Record
     public void setReturnDate()
 	{
 		Date date=new Date();
-		SimpleDateFormat sdf=new SimpleDateFormat ("yyyy/MM/dd");
+		SimpleDateFormat sdf=new SimpleDateFormat ("yyyy-MM-dd");
 		record.add(3,sdf.format(date));
 	}
+    
     public void  setAccount(String account){record.add(0,account);}
     public void  setISBN(String ISBN){record.add(1,ISBN);}
     public void  setBorrowDate(String borrowDate){record.add(2,borrowDate);}

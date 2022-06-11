@@ -17,7 +17,6 @@ public abstract class Member_UI  extends User_Interface
     protected JLabel publisherLB=new JLabel("出版商:");
     protected String title,author,publisher,ISBN;
     protected ArrayList<Book> books;
-    protected ArrayList<Record> records;
 
 	public int w=1000,h=750;
 
@@ -213,7 +212,7 @@ public abstract class Member_UI  extends User_Interface
     public JPanel return_pane(Book book)
     {
         JPanel pane=new JPanel();
-        JLabel ISBNLB2=new JLabel(book.getISBN());
+                JLabel ISBNLB2=new JLabel(book.getISBN());
         JLabel titleLB2=new JLabel(book.getTitle());
         JLabel authorLB2=new JLabel(book.getAuthor());
         JLabel publisherLB2=new JLabel(book.getPublisher());
@@ -338,16 +337,13 @@ public abstract class Member_UI  extends User_Interface
         frame.remove(panel);
 		panel= new JPanel();
         frame.setLayout(new GridLayout(5,5));//排版的時候要刪掉
-        JLabel periodLB=new JLabel("借還書期間:");
-        books=new ArrayList<>();
-        records=user.get_Record();
-        if(records.isEmpty()){Home();}
-        else
+        JLabel periodLB=new JLabel("借書期間:");
+
+        ArrayList<Book> books=new ArrayList<>();
+        books=user.get_Record_book();
+        for(int i=0;i<books.size();i++)
         {
-            for(int i=0;i<records.size();i++)
-            {
-                panel.add(history_pane(records.get(i),user.get_Record_books(user.get_Record().get(i).getISBN()).get(i)));
-            }
+            panel.add(history_pane(books.get(i)));
         }
         back=new JButton("返回");
         back.setActionCommand("0");
@@ -363,14 +359,15 @@ public abstract class Member_UI  extends User_Interface
 		frame.add(panel);
 		frame.setVisible(true);
     }
-    public JPanel history_pane(Record record,Book book)
+    public JPanel history_pane(Book book)
     {
         JPanel pane=new JPanel();
+
         JLabel ISBNLB2=new JLabel(book.getISBN());
         JLabel titleLB2=new JLabel(book.getTitle());
         JLabel authorLB2=new JLabel(book.getAuthor());
         JLabel publisherLB2=new JLabel(book.getPublisher());
-        JLabel periodLB2=new JLabel(record.getBorrowDate()+"~"+record.getReturnDate());
+        JLabel periodLB2=new JLabel(user.get_Due(book));
         pane.add(titleLB2);
         pane.add(authorLB2);
         pane.add(publisherLB2);
